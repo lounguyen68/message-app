@@ -19,7 +19,7 @@ app.use(express.urlencoded({
 //init db
 require('./db/mongodb')
 //init routes
-app.use('/',router)
+app.use('/v1/api',router)
 //app.use('/',require('./routes'))
 
 //handling error

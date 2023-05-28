@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
         required:true,
         minLength: 7
     },
+    refreshToken:{
+        type:String
+    }
 },{
     timestamp:true,
     collection: COLLECTION_NAME
