@@ -11,10 +11,10 @@ const generateTokens = async user => {
         username: user.username
     }
     const accessToken = await jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '2 days'
+        expiresIn: '1 days'
     })
     const refreshToken = await jwt.sign(data, process.env.REFRESH_TOKEN_SECRET,{
-        expiresIn: '7 days'
+        expiresIn: '3 days'
     })
     return { accessToken, refreshToken }
 }
@@ -133,6 +133,9 @@ module.exports = {
     },
     friendRequest: async (req, res) => {
         const { senderId, recipientId } = req.body
+        if (senderId != req.id) {
+            return res.status(404).json({message: 'Invalid access'})
+        }
         try {
             const sender = await userModel.findOne({_id: senderId})
             const recipient = await userModel.findOne({_id: recipientId})
@@ -160,7 +163,9 @@ module.exports = {
     },
     friendAccept: async (req, res) => {
         const { senderId, accepterId } = req.body
-      
+        if (accepterId != req.id) {
+            return res.status(404).json({message: 'Invalid access'})
+        }
         try {
             const sender = await userModel.findOne({_id: senderId})
             const accepter = await userModel.findOne({_id: accepterId})

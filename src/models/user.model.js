@@ -31,16 +31,22 @@ const userSchema = new mongoose.Schema({
         {
           sender: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: DOCUMENT_NAME,
+            ref: 'Users',
           }
         }
       ],
     friends: [
         {
           type: mongoose.Schema.Types.ObjectId,
-          ref: DOCUMENT_NAME,
+          ref: 'Users',
         }
       ],
+    chats: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Chats',
+        },
+    ],
     refreshToken:{
         type:String
     }
