@@ -12,6 +12,9 @@ userRouter.delete('/logout',verifyToken, userController.logOut)
 //* Get new AccessToken
 userRouter.post('/token', userController.getToken)
 //*Get user's information 
-userRouter.get('/infor/:username', verifyToken, userController.getUser)
-
+userRouter.get('/infor/:id', verifyToken, userController.getUser)
+//* Send friend request
+userRouter.post('/request', verifyToken, userController.friendRequest)
+//* Accept friend request
+userRouter.post('/friend', verifyToken, userController.friendAccept)
 module.exports = userRouter

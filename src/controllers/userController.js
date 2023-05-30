@@ -62,7 +62,7 @@ module.exports = {
             })
         } catch (error) {
             console.log(error)
-            return res.status(404);
+            return res.status(404)
         }
     },
     logIn: async (req, res) => {
@@ -116,9 +116,9 @@ module.exports = {
         }
     },
     getUser: async (req, res) => {
-        const username = req.params.username
+        const id = req.params.id
     
-        const user = await userModel.findOne({ username })
+        const user = await userModel.findOne({ _id: id })
         if (!user) {
             return res.status(404).json({
                 message: 'User not found'
@@ -130,5 +130,65 @@ module.exports = {
             urlAvatar: user.urlAvatar
         }
         res.status(200).json(data)
+    },
+    friendRequest: async (req, res) => {
+        const { senderId, recipientId } = req.body
+        try {
+            const sender = await userModel.findOne({_id: senderId})
+            const recipient = await userModel.findOne({_id: recipientId})
+      
+            if (!recipient || !sender) {
+                return res.status(404).json({ error: 'User not found' })
+            }
+      
+            const existingRequest = recipient.friendRequests.find(
+                (request) => request.sender.toString() === senderId,
+            )
+      
+            if (existingRequest) {
+                return res.status(400).json({ error: 'Friend request already sent' })
+            }
+        
+            recipient.friendRequests.push({ sender: senderId })
+            await recipient.save()
+        
+            res.json({ message: 'Friend request sent' })
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({ error: 'Failed to send friend request' })
+        }
+    },
+    friendAccept: async (req, res) => {
+        const { senderId, accepterId } = req.body
+      
+        try {
+            const sender = await userModel.findOne({_id: senderId})
+            const accepter = await userModel.findOne({_id: accepterId})
+        
+            if (!sender || !accepter) {
+                return res.status(404).json({ error: 'User not found' })
+            }
+        
+            const existingRequest = accepter.friendRequests.find(
+                (request) => request.sender.toString() === senderId,
+            )
+        
+            if (!existingRequest) {
+                return res.status(400).json({ error: 'Friend request not found' })
+            }
+        
+            accepter.friendRequests = accepter.friendRequests.filter(
+                (request) => request.sender.toString() !== senderId,
+            )
+            accepter.friends.push(senderId)
+            sender.friends.push(accepterId)
+            await accepter.save()
+            await sender.save()
+        
+            res.json({ message: 'Friend request accepted' });
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({ error: 'Failed to accept friend request' })
+        }
     }
 }

@@ -1,5 +1,4 @@
 'use strict'
-const validator = require('validator')
 const mongoose = require('mongoose'); // Erase if already required
 const DOCUMENT_NAME = 'User'
 const COLLECTION_NAME = "Users"
@@ -28,6 +27,20 @@ const userSchema = new mongoose.Schema({
         required:true,
         minLength: 7
     },
+    friendRequests: [
+        {
+          sender: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: DOCUMENT_NAME,
+          }
+        }
+      ],
+    friends: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: DOCUMENT_NAME,
+        }
+      ],
     refreshToken:{
         type:String
     }
