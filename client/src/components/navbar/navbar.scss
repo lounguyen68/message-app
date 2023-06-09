@@ -1,0 +1,25 @@
+@use '../../scss/' as *;
+.navbar {
+    @include flex(column, center, unset);
+    width: 100%;
+    height: 100vh;
+    background-color: $white;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    a {
+        padding: 0.5em 2.5em;
+        @include tablet {
+            padding: 0;
+        }
+    }
+}
+.logo {
+    padding: 0.5em;
+    .logoimg {
+        width: 100%;
+        img {
+            width: 84px;
+            height: 84px;
+        }
+    }
+}

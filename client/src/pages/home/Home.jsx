@@ -1,13 +1,13 @@
 import React from 'react'
 import Navbar from '../../components/navbar/Navbar'
 
-const Friends = () => {
+const Home = () => {
   return (
-    <div className="container">
+    <div className="home container">
       <Navbar/>
-      <div>friends</div>
+      <div> Home</div>
     </div>
   )
 }
 
-export default Friends
+export default Home

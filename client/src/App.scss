@@ -1,9 +1,40 @@
 @use './scss/' as *;
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+html {
+  font-size: 100%;
+
+}
+body {
+  font-family: $font-family;
+  font-weight: 400;
+  line-height: 1.5;
+
+  @include mobile {
+      margin-bottom: 3rem;
+  }
+}
+a {
+  text-decoration: none;
+  color: unset;
+}
+button,
+input {
+    outline: 0;
+    border: none;
+}
+ul {
+    list-style-type: none;
+}
+img {
+    max-width: 100%;
+}
+.container {
+  @include flex(row, unset, unset)
 }

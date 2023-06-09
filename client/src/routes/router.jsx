@@ -1,19 +1,22 @@
 import { createBrowserRouter } from "react-router-dom"
-import Chats from '../pages/Chats/Chats'
+import Chats from '../pages/chats/Chats'
 import Friends from '../pages/friends/Friends'
+import Home from "../pages/home/Home"
 
 const router = createBrowserRouter([
     {
+      path: '/',
+      element: <Home/>
+    },
+    {
       path: "/chats",
-      Component() {
-        return <Chats/>;
-      },
+      element: <Chats />
     },
     {
       path: "/friends",
-      Component() {
-        return <Friends/>;
-      },
+      element: <Friends />
     }
-  ]);
+  ],{
+    basename: '/'
+  });
 export default router;
