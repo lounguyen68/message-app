@@ -1,10 +1,11 @@
 @use '../../scss/' as *;
 
 .user {
+    width: 100%;
     @include flex(row, center, unset);
     padding: 8px 16px;
     &__img {
-        
+        margin-right: 10px;
         img {
             width: 56px;
             height: 56px;
@@ -12,8 +13,11 @@
         }
     }
     &__name {
+        @include flex(row, center, center);
+        text-align: center;
         font-size: 20px;
         font-family: $font-family;
         color: $black;
     }
+    
 }

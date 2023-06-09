@@ -14,6 +14,9 @@ button {
     font-weight: 400;
     @include flex(row, center, space-between);
     
+    &.active {
+        font-weight: 600;
+    }
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.1);
