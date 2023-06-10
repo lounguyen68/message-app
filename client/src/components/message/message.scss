@@ -1,0 +1,21 @@
+@use '../../scss/' as *;
+
+.message {
+    width: 100%;
+    margin: 1em 0;
+    &__box {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: $black;
+        border-radius: 30px;
+        padding: 0.5em 1em;
+        width: fit-content;
+        height: fit-content;
+    }
+    &.me {
+        @include flex(row, center, flex-end);
+        .message__box {
+            background-color: $blue;
+            color: $white;
+        }
+    }
+}
