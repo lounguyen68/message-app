@@ -1,0 +1,46 @@
+@use '../../scss/' as *;
+
+.friend-card {
+    width: 30%;
+    @include flex(column, center, center);
+    padding: 1em;
+    margin-left: 1em;
+    margin-bottom: 0.5em;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    &__avatar {
+        width: 60%;
+        height: 60%;
+        padding: 0.2em;
+        overflow: hidden;
+        @include flex(row, center, center);
+        img {
+            display: block;
+            border-radius: 50%;
+        }
+    }
+    &__username {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 0.3em;
+    }
+
+    .btn {
+        @include flex(row, center, center);
+        padding: 0.5em 1em;
+        width: max-content;
+        color: $white;
+        &:active {
+            opacity: 0.8;
+        } 
+    }
+
+    .btn__acp {
+        background-color: $blue;
+        margin-bottom: 0.3em;
+    }
+    .btn__del {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
