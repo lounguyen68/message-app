@@ -1,0 +1,61 @@
+@use '../../scss/' as *;
+
+.login {
+    width: 100%;
+    height: 100vh;
+    @include flex(row, center, center);
+    background-image: url('../../assets/home_bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    &__form {
+        @include flex(column, flex-start, unset);
+        background-color: rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: fit-content;
+        max-width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 1em;
+        h3 {
+            color: $white;
+        }
+        input {
+            width: 100%;
+            margin: 1em 0;
+            padding: 0.5em;
+            border: 1px solid $black;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+
+        .btn__login {
+            width: fit-content;
+            padding: 0.5em 1em;
+            align-self: center;
+            background-color: $blue;
+            color: $white;
+
+            &:hover {
+                opacity: 0.8;
+            }
+            &:active {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+        .option {
+            width: 100%;
+            margin-top: 0.5em;
+            color: $white;
+            p {
+                text-align: center;
+                a {
+                    font-weight: 600;
+                    &:active {
+                        color: $blue;
+                    }
+                }
+            }
+        }
+    }
+}
