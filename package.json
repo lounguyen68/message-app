@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "compression": "^1.7.4",
+    "cors": "^2.8.5",
     "helmet": "^7.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22"

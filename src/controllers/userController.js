@@ -86,7 +86,7 @@ module.exports = {
             //TODO create and send accesstoken, refreshtoken to user
             const tokens = await generateTokens(user)
             updateRefreshToken(username, tokens.refreshToken)
-            res.status(201).json(tokens)
+            res.status(200).json({id: user.id, ...tokens})
         } catch (error) {
             return res.status(404).json({
                 message: error
