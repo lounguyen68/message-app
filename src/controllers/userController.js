@@ -28,7 +28,6 @@ module.exports = {
     signUp: async (req, res) => {
         try {
             const {username, email, urlAvatar, password} = req.body
-    
             if (!validator.isEmail(email) || await userModel.findOne({email}).lean()) {
                 return res.status(403).json( {
                     message: 'Email address is invalid or already exists'
@@ -36,14 +35,14 @@ module.exports = {
             }
     
             const user = await userModel.findOne({username}).lean()
-    
+
             if (user) {
                 return res.status(403).json( {
                     message: 'Username already exists'
                 })
             }
-    
-            const passwordHash = await bcrypt.hash(password, 10)
+
+            const passwordHash = await bcrypt.hashSync(password, 10);
             const newUser = await userModel.create({
                 username, email, urlAvatar, password: passwordHash, refreshToken: null
             })
@@ -77,7 +76,7 @@ module.exports = {
                 })
             }
             //TODO check password in db
-            const match = await bcrypt.compare(password, user.password);
+            const match = await bcrypt.compareSync(password, user.password);
             if (!match) {
                 return res.status(403).json( {
                     message: 'Incorrect username or password'
@@ -86,7 +85,12 @@ module.exports = {
             //TODO create and send accesstoken, refreshtoken to user
             const tokens = await generateTokens(user)
             updateRefreshToken(username, tokens.refreshToken)
-            res.status(200).json({id: user.id, ...tokens})
+            res.status(200).json({userInfo: {
+                id: user.id,
+                username: username,
+                email: user.email,
+                urlAvatar: user.urlAvatar
+            }, userToken: tokens})
         } catch (error) {
             return res.status(404).json({
                 message: error
@@ -94,7 +98,13 @@ module.exports = {
         }
     },
     logOut: async (req, res) => {
-        await userModel.findOneAndUpdate({username: req.username}, {refreshToken: null})
+        if (req.id !== req.body.id) {
+            res.sendStatus(403)
+        }
+        const user = await userModel.findOneAndUpdate({_id: req.id}, {refreshToken: null})
+        if (!user) {
+            res.sendStatus(403)
+        }
         res.sendStatus(200)
     },
     getToken: async (req, res) => {

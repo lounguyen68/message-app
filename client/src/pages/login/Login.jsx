@@ -1,27 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/button/Button';
 import Input from '../../components/input/Input'
-import { useDispatch } from 'react-redux';
-import { login } from '../../store/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../store/auth/authActions';
 import { useNavigate } from 'react-router-dom';
 import './login.scss';
-
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const { loading, userInfo, error } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (userInfo.id) {
+          navigate('/')
+        }
+      }, [navigate, userInfo])
+
     const handleLogin = () => {
-        let user = {username, password}
-        dispatch(login(user))
+        dispatch(loginUser({username, password}))
             .then(result => {
                 if (result.payload) {
                     setUsername('');
                     setPassword('');
-                    navigate('/');
                 }
             })
     }
@@ -43,12 +47,15 @@ const Login = () => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
+                <div className="login__error" style={error ? {backgroundColor: "#ffffff"} : null}>
+                    <p>{error ? error : null}</p>
+                </div>
             
                 <Button
                     className="btn__login"
                     onClick={handleLogin}
                 >
-                    Login
+                    {loading ? 'Loading...' : 'Login'}
                 </Button>
 
                 <div className='option'>

@@ -1,8 +1,10 @@
+import { useEffect } from 'react'
 import Button from '../button/Button'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate} from 'react-router-dom'
 import logo from '../../assets/logo.png'
 import './navbar.scss'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { logoutUser } from '../../store/auth/authActions'
 const menuNav = [
     {
         path: '/',
@@ -22,32 +24,53 @@ const menuNav = [
 ]
 
 const Navbar = () => { 
+    const { loading, userInfo, userToken, error } = useSelector((state) => state.auth)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    useEffect(() => {
+      if (!userInfo.id){
+        navigate('/login')
+      }
+    }, [navigate, userInfo])
+    
 
+    const handleLogout = () => {
+        const data ={id: userInfo.id, token: userToken}
+        dispatch(logoutUser(data))
+    }
     const { pathname } = useLocation();
     const active = menuNav.findIndex((e) => e.path === pathname)
-    console.log(active);
     return (
-        <div className="navbar">
-            <Link to="/">
-                <div className ="logo">   
-                   <img src={logo} alt="" />
-                </div>
-            </Link>
-            {
-                menuNav.map((e,i) =>{
-                    return (
-                        <Link to={e.path} key={i}>
-                            <Button
-                                className={`btn__${e.display} ${active === i ? 'active' : ''}`}
-                            >
-                                <div className="btn__icon"><i class={`bx bx${active === i ? 's' : ''}-${e.icon}`} ></i></div>
-                                <div className='btn__name'>{e.display}</div>
-                            </Button>
-                        </Link>
-                    )
-                })
-            }
-        </div>
+            <div className="navbar">
+                <Link to="/">
+                    <div className ="logo">   
+                       <img src={logo} alt="" />
+                    </div>
+                </Link>
+                {
+                    menuNav.map((e,i) =>{
+                        return (
+                            <Link to={userInfo.id && e.path !== '/' ? e.path : '/login'} key={i}>
+                                <Button
+                                    className={`btn__${e.display} ${active === i ? 'active' : ''}`}
+                                >
+                                    <div className="btn__icon"><i className={`bx bx${active === i ? 's' : ''}-${e.icon}`} ></i></div>
+                                    <div className='btn__name'>{e.display}</div>
+                                </Button>
+                            </Link>
+                        )
+                    })
+                }
+                {userInfo.id ? <div>
+                    <Button
+                    className={`btn__logout`}
+                    onClick={handleLogout}
+                    >
+                        <div className="btn__icon"><i className='bx bx-log-out'></i></div>
+                        <div className='btn__name'>Logout</div>
+                    </Button>
+                </div> : null}
+            </div>
     )
 }
 

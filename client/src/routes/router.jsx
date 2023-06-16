@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     },
     {
       path: "/friends",
-      element: <Friends />
+      element: <Friends/>
     },
     {
       path: "/login",

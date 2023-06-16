@@ -61,4 +61,13 @@
             }
         }
     }
+    &__error {
+        width: 100%;
+        @include flex(row, center, unset);
+        border-radius: 10px;
+        color: red;
+        padding: 0.2em;
+        margin-bottom: 0.5em;
+        
+    }
 }

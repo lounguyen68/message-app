@@ -78,13 +78,13 @@ const Chats = () => {
                             urlAvatar = ''
                         />
                         <div className="chats__chatbox__navbar__user__icon">
-                            <i class='bx bxs-phone' ></i>
+                            <i className='bx bxs-phone' ></i>
                         </div>
                         <div className="chats__chatbox__navbar__user__icon">
-                            <i class='bx bxs-video' ></i>
+                            <i className='bx bxs-video' ></i>
                         </div>
                         <div className="chats__chatbox__navbar__user__icon">
-                            <i class='bx bxs-info-circle' ></i>
+                            <i className='bx bxs-info-circle' ></i>
                         </div>
                         
                     </div>

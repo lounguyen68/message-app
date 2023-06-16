@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Input from '../../components/input/Input'
 import Button from '../../components/button/Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './signup.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { registerUser } from '../../store/auth/authActions'
 
 const Signup = () => {
     const [email, setEmail] = useState('');
@@ -10,7 +12,21 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
 
-    const handleSignup = () => {}
+    const { loading, userInfo, error, success } = useSelector(
+        (state) => state.auth
+    )
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (success) navigate('/login')
+      }, [navigate, success])
+    
+    const urlAvatar = 'test'
+    const handleSignup = () => {
+        dispatch(registerUser({email, username, urlAvatar ,password: password2}))
+    }
 
     return (
         <div className="signup">
@@ -43,6 +59,9 @@ const Signup = () => {
                         value={password2}
                         onChange={e => setPassword2(e.target.value)}
                     />
+                    <div className="signup__error" style={error ? {backgroundColor: "#ffffff"} : null}>
+                        <p>{error ? error : null}</p>
+                    </div>
                     <Button
                         className="btn__signup"
                         onClick={handleSignup}
