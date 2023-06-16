@@ -98,9 +98,6 @@ module.exports = {
         }
     },
     logOut: async (req, res) => {
-        if (req.id !== req.body.id) {
-            res.sendStatus(403)
-        }
         const user = await userModel.findOneAndUpdate({_id: req.id}, {refreshToken: null})
         if (!user) {
             res.sendStatus(403)

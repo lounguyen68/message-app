@@ -35,8 +35,7 @@ const Navbar = () => {
     
 
     const handleLogout = () => {
-        const data ={id: userInfo.id, token: userToken}
-        dispatch(logoutUser(data))
+        dispatch(logoutUser({token: userToken}))
     }
     const { pathname } = useLocation();
     const active = menuNav.findIndex((e) => e.path === pathname)

@@ -60,22 +60,19 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   'auth/logout',
-    async ({ id, token }, { rejectWithValue }) => {
+    async ({ token }, { rejectWithValue }) => {
       try {
         // configure header's Content-Type as JSON
         const config = {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
           },
         }
 
         await axios.delete(
           `${backendURL}/logout`,
-          { id },
           config
         )
-
         // remove user's info in local storage
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
