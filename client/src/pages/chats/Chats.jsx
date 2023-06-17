@@ -5,8 +5,11 @@ import Input from '../../components/input/Input'
 import Button from '../../components/button/Button'
 import Navbar from '../../components/navbar/Navbar'
 import Message from '../../components/message/Message'
+import { useSelector } from 'react-redux'
 
 const Chats = () => {
+    const { userInfo } = useSelector(state => state.auth)
+
     const [message, setMessage] = useState('')
 
     return (
@@ -16,8 +19,8 @@ const Chats = () => {
             <div className="chats__menu">
                 <div className="chats__menu__user">
                     <User
-                        id = 'test'
-                        username = 'admin'
+                        id = {userInfo.id}
+                        username = {userInfo.username}
                         urlAvatar = 'https://res.cloudinary.com/messavatars/image/upload/v1685460798/messAvatar/anhFB_nnwwjf.jpg'
                     />
                 </div>

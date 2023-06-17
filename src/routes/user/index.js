@@ -17,4 +17,8 @@ userRouter.get('/infor/:id', verifyToken, userController.getUser)
 userRouter.post('/request', verifyToken, userController.friendRequest)
 //* Accept friend request
 userRouter.post('/friend', verifyToken, userController.friendAccept)
+//* Get friends list
+userRouter.get('/friends', verifyToken, userController.getFriends)
+//* Get requests list
+userRouter.get('/requests', verifyToken, userController.getRequests)
 module.exports = userRouter

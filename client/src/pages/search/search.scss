@@ -1,0 +1,17 @@
+@use '../../scss/' as *;
+
+.search {
+    width: 100%;
+    @include flex(column, center, unset);
+
+    &__input{
+        @include flex(column, center, unset);
+        input {
+            font-size: 16px;
+            padding: 0.5em;
+            border: 1px solid $black;
+            border-radius: 10px;
+        }
+        margin-top: 2em;
+    }
+}

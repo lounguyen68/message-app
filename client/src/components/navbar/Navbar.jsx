@@ -21,14 +21,20 @@ const menuNav = [
         display: 'Friends',
         icon: 'group',
     },
+    {
+        path: '/search',
+        display: 'Search',
+        icon: 'search',
+    }
 ]
 
 const Navbar = () => { 
     const { loading, userInfo, userToken, error } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     useEffect(() => {
-      if (!userInfo.id){
+      if (!userInfo.id && pathname !== '/'){
         navigate('/login')
       }
     }, [navigate, userInfo])
@@ -37,7 +43,6 @@ const Navbar = () => {
     const handleLogout = () => {
         dispatch(logoutUser({token: userToken}))
     }
-    const { pathname } = useLocation();
     const active = menuNav.findIndex((e) => e.path === pathname)
     return (
             <div className="navbar">

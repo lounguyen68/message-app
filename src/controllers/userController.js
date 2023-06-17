@@ -202,5 +202,35 @@ module.exports = {
             console.log(error)
             res.status(404).json({ error: 'Failed to accept friend request' })
         }
-    }
+    },
+    getFriends: async (req, res) => {
+        try {
+            const userId = req.id
+            const user = await userModel.findOne({ _id: userId })
+            
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' })
+            }
+            const friends = user.friends
+            res.status(200).json(friends)
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({ error: 'Get friends list failed' })
+        }
+    },
+    getRequests: async (req, res) => {
+        try {
+            const userId = req.id
+            const user = await userModel.findOne({ _id: userId })
+            
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' })
+            }
+            const friendRequests = user.friendRequests
+            res.status(200).json(friendRequests)
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({ error: 'Get requests list failed' })
+        }
+    },
 }

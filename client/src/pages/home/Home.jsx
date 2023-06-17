@@ -1,15 +1,11 @@
-import { useState, useEffect } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import Button from '../../components/button/Button'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import homebg from '../../assets/home_bg.png'
 import logo from '../../assets/logo.png'
 import './home.scss'
-import axios from 'axios'
-import { useSelector } from 'react-redux'
 
 const Home = () => {
-    const { loading, userInfo, error } = useSelector((state) => state.auth)
 	return (
 		<div className="container">
 			<Navbar/>
@@ -24,7 +20,7 @@ const Home = () => {
 				<Button
 					className="home__btn"
 				>	
-					<Link to={true ? '/chats' : '/login'}>
+					<Link to='/chats'>
 						<p>Chat Now</p>
 						<img src={logo} alt="" />
 					</Link>
