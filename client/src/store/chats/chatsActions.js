@@ -25,3 +25,26 @@ export const getChats = createAsyncThunk(
         }
     }
 )
+
+export const getMessages = createAsyncThunk(
+    'chats/messages',
+    async({chatId, token}, { rejectWithValue }) => {
+        try {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            }
+            const response = await axios.get(`${backendURL}/${chatId}`, config)
+            const messages = response.data.chat.messages
+            return messages
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message)
+              } else {
+                return rejectWithValue(error.message)
+              }
+        }
+    }
+)
+

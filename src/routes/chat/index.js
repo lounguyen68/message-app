@@ -5,6 +5,8 @@ const chatController = require('../../controllers/chatController')
 
 //* Create a new chat
 chatRouter.post('/', verifyToken, chatController.create)
+//* Get chats
+chatRouter.get('/', verifyToken, chatController.getChats)
 //* Get a chat
 chatRouter.get('/:chatId', verifyToken, chatController.get)
 

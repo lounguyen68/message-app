@@ -1,5 +1,7 @@
 @use '../../scss/' as *;
 
+
+
 .chats__chatbox {
     width: 100%;
     height: 100%;
@@ -11,11 +13,18 @@
         &__user {
             @include flex(row, center, space-between);
             padding-right: 0.5em;
-            .user {
-                width: 85%;
+            .chat-card {
+                width: 100%;
+                &:hover{
+                    background-color: unset;
+                }
+            }
+            &__icons {
+                width: 30%;
+                @include flex(row, center,  space-between);
             }
             &__icon {
-                @include flex(row, center, center);
+                @include flex(row, center,  center);
                 font-size: 2em;
                 padding: 0.2em;
                 border-radius: 15px;

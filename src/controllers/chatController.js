@@ -4,11 +4,21 @@ const userModel = require('../models/user.model')
 
 //* Create a new chat
 const createChat = async (firstId, secondId) => {
-    const chat = new chatModel({
-        users: [firstId, secondId],
-        messages: []
-    })
-    await chat.save()
+    let chat = await chatModel.findOne({
+        users: {
+          $all: [
+            firstId,
+            secondId
+          ]
+        }
+      }).lean();
+    if (!chat) {
+        chat = new chatModel({
+            users: [firstId, secondId],
+            messages: []
+        })
+        await chat.save()
+    }
     return chat
 }
 
@@ -61,6 +71,21 @@ module.exports = {
         } catch (error) {
             console.log(error)
             return res.status(404).json({message: 'Failed to create chat box'})
+        }
+    },
+    getChats: async (req, res) => {
+        const userId = req.id
+        try {
+            const chats = await chatModel.find({ users: userId })
+                            .select('_id users')
+                            .exec();
+            if (!chats) {
+                return res.status(404).json({ error: 'Chats not found' })
+            }
+            res.status(200).json(chats);
+        } catch (error) {
+            console.log(error)
+            return res.status(404).json({message: 'Failed to get chats'})
         }
     }
 }

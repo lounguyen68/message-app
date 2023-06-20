@@ -1,56 +1,62 @@
-import {useState} from 'react'
-import User from '../user/User'
+import {useEffect, useState} from 'react'
 import Message from '../message/Message'
 import Input from '../input/Input'
 import Button from '../button/Button'
 import './chat-box.scss'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMessages } from '../../store/chats/chatsActions'
+import ChatCard from '../chat-card/ChatCard'
 
 const ChatBox = () => {
+    const { userToken, userInfo } = useSelector(state => state.auth)
+    const { loading, messages,chats } = useSelector(state => state.chats)
     const [message, setMessage] = useState('')
-
+    const { chatId } = useParams()
+    const dispatch = useDispatch()
+    let chat = null;
+    if(chatId){
+        chat = chats.filter(chat => chat._id === chatId)[0]
+    }
+    useEffect(() => {
+        if (chatId) {
+            dispatch(getMessages({chatId, token: userToken}))
+        }
+    }, [chatId])
     return (
+        chatId 
+        ?
         <div className="chats__chatbox">
                 <div className="chats__chatbox__navbar">
                     <div className="chats__chatbox__navbar__user">
-                        <User
-                            id = 'test2'
-                            username = 'longhaothien'
-                            urlAvatar = ''
-                        />
-                        <div className="chats__chatbox__navbar__user__icon">
-                            <i className='bx bxs-phone' ></i>
+                        {chat ? <ChatCard id={chat._id}  users={chat.users}/> : null}
+                        <div className="chats__chatbox__navbar__user__icons">
+                            <div className="chats__chatbox__navbar__user__icon">
+                                <i className='bx bxs-phone' ></i>
+                            </div>
+                            <div className="chats__chatbox__navbar__user__icon">
+                                <i className='bx bxs-video' ></i>
+                            </div>
+                            <div className="chats__chatbox__navbar__user__icon">
+                                <i className='bx bxs-info-circle' ></i>
+                            </div>
                         </div>
-                        <div className="chats__chatbox__navbar__user__icon">
-                            <i className='bx bxs-video' ></i>
-                        </div>
-                        <div className="chats__chatbox__navbar__user__icon">
-                            <i className='bx bxs-info-circle' ></i>
-                        </div>
-                        
                     </div>
                 </div>
-                <div className="chats__chatbox__content">
-                    <Message
-                        className={'test1' === 'test2' ? 'me' : ''}
-                        id='test1'
-                        content='Hello'
-                    />
-                    <Message
-                        className={'test2' === 'test2' ? 'me' : ''}
-                        id='test2'
-                        content='Hello2'
-                    />
-                    <Message
-                        className={'test2' === 'test2' ? 'me' : ''}
-                        id='test2'
-                        content='Hello3'
-                    />
-                    <Message
-                        className={'test1' === 'test2' ? 'me' : ''}
-                        id='test1'
-                        content='Hello4'
-                    />
-                </div>
+                {loading 
+                ? <div style={{textAlign: 'center', width: '100%'}}> <p>Loading...</p></div>
+                : <div className="chats__chatbox__content">
+                    {messages.map((message) => {
+                        return (
+                            <Message
+                                key={message._id}
+                                className={message.sender === userInfo.id ? 'me' : ''}
+                                id={message._id}
+                                content={message.content}
+                            />
+                        )
+                    })}
+                </div>}
                 <div className="chats__chatbox__sending">
                     <div className="chats__chatbox__sending__input">
                         <Input
@@ -66,7 +72,8 @@ const ChatBox = () => {
                         </Button>
                     </div>
                 </div>
-            </div>
+        </div>
+        :<div style={{textAlign: 'center', width: '100%'}}> <p>Choose a chatbox</p></div>
     )
 }
 
