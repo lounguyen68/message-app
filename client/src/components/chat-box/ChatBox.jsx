@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMessages, postMessage } from '../../store/chats/chatsActions'
 import ChatCard from '../chat-card/ChatCard'
+import { io } from 'socket.io-client'
 
 const ChatBox = () => {
     const { userToken, userInfo } = useSelector(state => state.auth)
@@ -25,8 +26,29 @@ const ChatBox = () => {
         }
     }, [chatId, messagesList])
 
+
+    useEffect(() => {
+        const socket = io("http://localhost:3003")
+        socket.on('received message', (data) => {
+            if (data.chatId === chatId) {
+                setMessagesList([...messagesList, data.message])
+            }
+        })
+        return () => {
+            socket.disconnect();
+        };
+    }, [])
+    
     const handleSendMessage = () => {
-        dispatch(postMessage({chatId, senderId: userInfo.id, content: message,token: userToken}))
+        if (message) {
+            const socket = io("http://localhost:3003")
+            socket.emit('send message', {
+                userInfo,
+                chatId,
+                message
+            });
+            dispatch(postMessage({chatId, senderId: userInfo.id, content: message,token: userToken}))
+        };
         setMessage('');
     }
 

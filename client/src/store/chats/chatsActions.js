@@ -64,7 +64,6 @@ export const postMessage = createAsyncThunk(
         }
         try {
             const response = await axios.post(`http://localhost:3003/v1/api/messages`,data, config)
-            console.log(response.data);
             return response.data.message;
             //socket
         } catch (error) {
