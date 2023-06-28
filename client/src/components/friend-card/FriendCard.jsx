@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 const FriendCard = ({ id }) => {
     const { userToken, userInfo } = useSelector(state => state.auth)
+    const { chats } = useSelector(state => state.chats)
     const [user, setUser] = useState({});
     const navigate = useNavigate()
     useEffect(() => {
@@ -22,14 +23,13 @@ const FriendCard = ({ id }) => {
         
     }, []);
     const handleChat = async () => {
-        // try { 
-        //   console.log('test');
-        //   const chatData = await getChat({firstId: userInfo.id, secondId: user.id, token: userInfo.id});
-        //   console.log(chatData);
-        //   navigate(`/chats/${chatData._id}`);
-        // } catch (error) {
-        //   console.log(error.message);
-        // }
+        const chatId = chats.map(chat => chat.users.includes(user.id) ? chat._id : null)
+        if (chatId) {
+            navigate(`/chats/${chatId}`)
+        } else {
+            chatId =  await getChat({firstId: userInfo.id, secondId: user.id, token: userToken})
+            navigate(`/chats/${chatId}`)
+        }
       };
     return (
         <div className="friends__list__user">

@@ -26,7 +26,6 @@ const ChatBox = () => {
         }
     }, [chatId, messagesList])
 
-
     useEffect(() => {
         const socket = io("http://localhost:3003")
         socket.on('received message', (data) => {

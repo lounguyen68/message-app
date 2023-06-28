@@ -34,7 +34,7 @@ const chatsSlice = createSlice({
         })
         .addCase(getMessages.fulfilled,(state, action)=>{
             state.loading = false;
-            state.messages = action.payload;
+            state.messages = action.payload.reverse();
         })
         .addCase(postMessage.fulfilled,(state, action)=>{
             state.messages.push(action.payload);

@@ -17,7 +17,6 @@
     }
     @include mobile {
         min-width: max-content;
-        @include flex(column, center, center);
     }
     .user {
         @include flex(row, center, center);
