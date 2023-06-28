@@ -6,6 +6,9 @@
     &:hover {
         background-color: rgba(0, 0, 0, 0.1);
     }
+    .user {
+        width: 100%;
+    }
     @include tablet {
         
     }
