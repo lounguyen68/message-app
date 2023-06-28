@@ -5,13 +5,14 @@ import Button from '../button/Button'
 import './chat-box.scss'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMessages } from '../../store/chats/chatsActions'
+import { getMessages, postMessage } from '../../store/chats/chatsActions'
 import ChatCard from '../chat-card/ChatCard'
 
 const ChatBox = () => {
     const { userToken, userInfo } = useSelector(state => state.auth)
-    const { loading, messages,chats } = useSelector(state => state.chats)
+    const { loading, messages, chats } = useSelector(state => state.chats)
     const [message, setMessage] = useState('')
+    const [messagesList, setMessagesList] = useState(messages)
     const { chatId } = useParams()
     const dispatch = useDispatch()
     let chat = null;
@@ -22,7 +23,13 @@ const ChatBox = () => {
         if (chatId) {
             dispatch(getMessages({chatId, token: userToken}))
         }
-    }, [chatId])
+    }, [chatId, messagesList])
+
+    const handleSendMessage = () => {
+        dispatch(postMessage({chatId, senderId: userInfo.id, content: message,token: userToken}))
+        setMessage('');
+    }
+
     return (
         chatId 
         ?
@@ -67,9 +74,20 @@ const ChatBox = () => {
                         />
                     </div>
                     <div className="chats__chatbox__sending__btn">
-                        <Button>
-                            <p>Send</p>
-                        </Button>
+                        {loading
+                        ?   <Button
+                                className="btn__sending"
+                            >
+                                <p>Sending...</p>
+                            </Button>
+                        :
+                            <Button
+                                className="btn__sending"
+                                onClick={handleSendMessage}
+                            >
+                                <p>Send</p>
+                            </Button>
+                        }
                     </div>
                 </div>
         </div>

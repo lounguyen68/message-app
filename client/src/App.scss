@@ -15,10 +15,6 @@ body {
   font-family: $font-family;
   font-weight: 400;
   line-height: 1.5;
-
-  @include mobile {
-      margin-bottom: 3rem;
-  }
 }
 a {
   text-decoration: none;
@@ -37,8 +33,12 @@ img {
 }
 .container {
   @include flex(row, unset, unset);
+  position: relative;
   width: 100%;
   height: 100vh;
+    @include mobile {
+      @include flex(column-reverse, space-between, flex-end);
+    }
 }
 
 @keyframes slideDown {

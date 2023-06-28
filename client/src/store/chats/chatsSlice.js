@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getChats, getMessages } from './chatsActions'
+import { getChats, getMessages, postMessage } from './chatsActions'
 
 const initialState = {
     loading: false,
@@ -35,6 +35,15 @@ const chatsSlice = createSlice({
         .addCase(getMessages.fulfilled,(state, action)=>{
             state.loading = false;
             state.messages = action.payload;
+        })
+        .addCase(postMessage.fulfilled,(state, action)=>{
+            state.messages.push(action.payload);
+        })
+        .addCase(postMessage.rejected,(state, action)=>{
+            state.error = action.error;
+        })
+        .addCase(postMessage.pending,(state, action)=>{
+            state.loading = false;
         })
 })
 

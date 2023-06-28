@@ -48,3 +48,33 @@ export const getMessages = createAsyncThunk(
     }
 )
 
+export const postMessage = createAsyncThunk(
+    'chats/message',
+    async ({chatId, senderId, content, token}) => {
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+        }
+        const data = {
+          chatId,
+          senderId,
+          content
+        }
+        try {
+            const response = await axios.post(`http://localhost:3003/v1/api/messages`,data, config)
+            console.log(response.data);
+            return response.data.message;
+            //socket
+        } catch (error) {
+          console.log(error);
+          if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message)
+          } else {
+            return rejectWithValue(error.message)
+          }
+        }
+    }
+)
+

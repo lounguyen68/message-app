@@ -37,4 +37,32 @@ export const getChat = async ({firstId, secondId, token}) => {
   }
 }
 
+export const postMessage2 = async ({chatId, senderId, content, token}) => {
+  console.log(chatId, senderId, content, token)
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    data: {
+      chatId,
+      senderId,
+      content
+    }
+  }
+  try {
+      const response = await axios.post(`http://localhost:3003/v1/api/messages`, config)
+      console.log(response.data);
+      return response.data.message;
+      //socket
+  } catch (error) {
+    console.log(error);
+    if (error.response && error.response.data.message) {
+      return rejectWithValue(error.response.data.message)
+    } else {
+      return rejectWithValue(error.message)
+    }
+  }
+}
+
 
