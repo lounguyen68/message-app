@@ -3,7 +3,6 @@
 
 .chats__menu__list {
     width: 100%;
-    height: 84vh;
     min-width: 340px;
     overflow-y: scroll;
     &::-webkit-scrollbar-thumb {
@@ -12,5 +11,21 @@
     &::-webkit-scrollbar-thumb:hover {
         background-color: rgba(0, 0, 0, 0.8);
     }
-
+    @include tablet {
+        min-width: max-content;
+    }
+    @include mobile {
+        min-width: max-content;
+    }
+    .user {
+        @include flex(row, center, center);
+        .user__img {
+            @include mobile {
+                display: none;
+            }
+        }
+        @include mobile {
+            padding: 8px 2px;
+        }
+    }
 }

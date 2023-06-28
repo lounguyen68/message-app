@@ -19,17 +19,19 @@ const Friends = () => {
     return (
         <div className="container">
             <Navbar/>
-            <div className="friends">
-                <div className="friends__header">
-                    <h3>Your Friends</h3>    
+            <div className="container__friend">
+                <div className="friends">
+                    <div className="friends__header">
+                        <h3>Your Friends</h3>    
+                    </div>
+                    <FriendList/>
                 </div>
-                <FriendList/>
-            </div>
-            <div className="friends-request">
-                <div className="friends-request__header">
-                    <h3>Requests</h3>    
+                <div className="friends-request">
+                    <div className="friends-request__header">
+                        <h3>Requests</h3>    
+                    </div>
+                    <RequestList/>
                 </div>
-                <RequestList/>
             </div>
         </div>
     )

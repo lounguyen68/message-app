@@ -24,11 +24,11 @@ const RequestCard = ({id}) => {
     const handleDeleted = () => {}
 
     return (
-        <div className="friend-card">
-            <div className="friend-card__avatar">
+        <div className="request-card">
+            <div className="request-card__avatar">
                 <img src={user && user.urlAvatar ? user.urlAvatar : avatarDefault} alt="" />
             </div>
-            <div className="friend-card__username">
+            <div className="request-card__username">
                 {user.username}
             </div>
             <Button

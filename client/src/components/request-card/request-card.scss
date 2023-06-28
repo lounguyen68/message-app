@@ -1,6 +1,6 @@
 @use '../../scss/' as *;
 
-.friend-card {
+.request-card {
     width: 30%;
     @include flex(column, center, center);
     padding: 1em;

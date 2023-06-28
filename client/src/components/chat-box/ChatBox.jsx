@@ -51,7 +51,7 @@ const ChatBox = () => {
                     </div>
                 </div>
                 {loading 
-                ? <div style={{textAlign: 'center', width: '100%'}}> <p>Loading...</p></div>
+                ? <div style={{textAlign: 'center', width: '80%'}}> <p>Loading...</p></div>
                 : <div className="chats__chatbox__content">
                     {messages.map((message) => {
                         return (
@@ -91,7 +91,7 @@ const ChatBox = () => {
                     </div>
                 </div>
         </div>
-        :<div style={{textAlign: 'center', width: '100%'}}> <p>Choose a chatbox</p></div>
+        :<div style={{textAlign: 'center', width: '80%'}}> <p>Choose a chatbox</p></div>
     )
 }
 

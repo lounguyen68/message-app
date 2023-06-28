@@ -2,9 +2,9 @@
 .navbar {
     @include flex(column, center, unset);
     z-index: 1;
-    width: 100%;
+    width: 10%;
     height: 100%;
-    max-width: max-content;
+    min-width: max-content;
     background-color: $white;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -33,6 +33,10 @@
     img {
             width: 84px;
             height: 84px;
+            @include tablet {
+                width: 40px;
+                height: 40px;
+            }
         }
     @include mobile {
         display: none;
