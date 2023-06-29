@@ -233,4 +233,16 @@ module.exports = {
             res.status(404).json({ error: 'Get requests list failed' })
         }
     },
+    search: async(req, res) => {
+        try {
+            const { keyword } = req.body
+            const users = 
+            await userModel.find({ username: { $regex: keyword, $options: 'i' } },
+            { _id: 1, username: 1, urlAvatar: 1, friends: 1, friendRequests: 1});
+            res.status(200).json({users})
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({ error: 'Searching failed' })
+        }
+    }
 }

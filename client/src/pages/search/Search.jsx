@@ -2,9 +2,9 @@ import {useState} from 'react'
 import './search.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Input from '../../components/input/Input'
+import SearchList from '../../components/search-list/SearchList'
 const Search = () => {
     const [searchInput, setSearchInput] = useState('')
-
     return (
         <div className="container">
             <Navbar/>
@@ -17,9 +17,7 @@ const Search = () => {
                         onChange={(e) => setSearchInput(e.target.value)}
                     />
                 </div>
-                <div className="search__list">
-                    
-                </div>
+                <SearchList keyword={searchInput}/>
             </div>
         </div>
     )

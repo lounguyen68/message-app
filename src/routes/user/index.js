@@ -21,4 +21,6 @@ userRouter.post('/friend', verifyToken, userController.friendAccept)
 userRouter.get('/friends', verifyToken, userController.getFriends)
 //* Get requests list
 userRouter.get('/requests', verifyToken, userController.getRequests)
+//* Search users
+userRouter.post('/search', verifyToken, userController.search)
 module.exports = userRouter

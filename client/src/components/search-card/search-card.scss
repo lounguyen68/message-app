@@ -1,0 +1,54 @@
+@use '../../scss/' as *;
+
+.search-card {
+    width: 30%;
+    @include flex(column, center, center);
+    padding: 1em;
+    margin-left: 1em;
+    margin-bottom: 0.5em;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    &__avatar {
+        width: 100%;
+        height: 100%;
+        padding: 0.2em;
+        overflow: hidden;
+        @include flex(row, center, center);
+        img {
+            width: 100px;
+            height: 100px;
+            display: block;
+            border-radius: 50%;
+        }
+    }
+    &__username {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 0.3em;
+    }
+
+    .btn {
+        @include flex(row, center, center);
+        padding: 0.5em 1em;
+        width: max-content;
+        color: $white;
+        &:active {
+            opacity: 0.8;
+        } 
+    }
+
+    .btn__req {
+        background-color: $blue;
+    }
+
+    .btn__disabled {
+        color: $black;
+        background-color: #ccc;
+        &:active {
+            color: $black;
+            background-color: #ccc;
+            opacity: 1;
+        }
+    }
+}

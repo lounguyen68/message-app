@@ -1,0 +1,7 @@
+@use '../../scss/' as *;
+
+.search__list {
+    width: 100%;
+    height: 100%;
+    @include flex(row, flex-start, unset);
+}
