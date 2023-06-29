@@ -3,12 +3,13 @@ import './request-card.scss';
 import avatarDefault from '../../assets/avatar_default.png'
 import Button from '../../components/button/Button'
 import {useSelector} from 'react-redux'
-import { getUser } from '../../api'
+import { acceptRequest, getUser } from '../../api'
+import { useNavigate } from 'react-router-dom'
 
 const RequestCard = ({id}) => {
-    const { userToken } = useSelector(state => state.auth)
+    const { userToken, userInfo } = useSelector(state => state.auth)
     const [user, setUser] = useState({});
-
+    const navigate = useNavigate()
     useEffect(() => {
         async function fetchData() {
         try {
@@ -20,13 +21,15 @@ const RequestCard = ({id}) => {
         fetchData();
     }, []);
 
-    const handleAccepted = () => {}
+    const handleAccepted = () => {
+        acceptRequest({senderId: id, accepterId: userInfo.id, token: userToken})
+    }
     const handleDeleted = () => {}
 
     return (
         <div className="request-card">
             <div className="request-card__avatar">
-                <img src={user && user.urlAvatar ? user.urlAvatar : avatarDefault} alt="" />
+                <img src={user && user.urlAvatar !== 'test' ? user.urlAvatar : avatarDefault} alt="" />
             </div>
             <div className="request-card__username">
                 {user.username}

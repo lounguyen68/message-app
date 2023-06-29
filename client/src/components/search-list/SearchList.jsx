@@ -20,7 +20,7 @@ const SearchList = ({keyword}) => {
                         {
                             users.map((user) =>{
                                 if (user._id !== userInfo.id && !user.friends.includes(userInfo.id))
-                                    return <SearchCard user={user}/>
+                                    return <SearchCard user={user} key={user._id}/>
                             })
                         }
         </div>

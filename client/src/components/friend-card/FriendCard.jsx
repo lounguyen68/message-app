@@ -23,13 +23,9 @@ const FriendCard = ({ id }) => {
         
     }, []);
     const handleChat = async () => {
-        const chatId = chats.map(chat => chat.users.includes(user.id) ? chat._id : null)
-        if (chatId) {
-            navigate(`/chats/${chatId}`)
-        } else {
-            chatId =  await getChat({firstId: userInfo.id, secondId: user.id, token: userToken})
-            navigate(`/chats/${chatId}`)
-        }
+        const response = await getChat({firstId: userInfo.id, secondId: user.id, token: userToken})
+        const chatId = response.chat._id
+        navigate(`/chats/${chatId}`)
       };
     return (
         <div className="friends__list__user">

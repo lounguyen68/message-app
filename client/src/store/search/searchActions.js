@@ -14,7 +14,6 @@ export const searchUsers = createAsyncThunk(
                 },
             }
             const response = await axios.post(`${backendURL}/search`,{keyword}, config)
-            console.log(response.data)
             return response.data;
         } catch (error) {
             console.log(error)
