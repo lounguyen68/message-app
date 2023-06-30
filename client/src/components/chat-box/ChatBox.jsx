@@ -6,31 +6,28 @@ import './chat-box.scss'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMessages, postMessage } from '../../store/chats/chatsActions'
-import ChatCard from '../chat-card/ChatCard'
 import { io } from 'socket.io-client'
+import ChatBoxNavbar from './ChatBoxNavbar'
 
 const ChatBox = () => {
     const { userToken, userInfo } = useSelector(state => state.auth)
-    const { loading, messages, chats } = useSelector(state => state.chats)
+    const { loading, messages,chats } = useSelector(state => state.chats)
     const [message, setMessage] = useState('')
-    const [messagesList, setMessagesList] = useState(messages)
     const { chatId } = useParams()
     const dispatch = useDispatch()
-    let chat = null;
-    if(chatId){
-        chat = chats.filter(chat => chat._id === chatId)[0]
-    }
+    const [chat, setChat] = useState(null)
     useEffect(() => {
         if (chatId) {
+            setChat(chats.find(chat => chat._id === chatId))
             dispatch(getMessages({chatId, token: userToken}))
         }
-    }, [chatId, messagesList])
+    }, [chatId])
 
     useEffect(() => {
         const socket = io("http://localhost:3003")
         socket.on('received message', (data) => {
             if (data.chatId === chatId) {
-                setMessagesList([...messagesList, data.message])
+                dispatch(getMessages({chatId, token: userToken}))
             }
         })
         return () => {
@@ -55,22 +52,7 @@ const ChatBox = () => {
         chatId 
         ?
         <div className="chats__chatbox">
-                <div className="chats__chatbox__navbar">
-                    <div className="chats__chatbox__navbar__user">
-                        {chat ? <ChatCard id={chat._id}  users={chat.users}/> : null}
-                        <div className="chats__chatbox__navbar__user__icons">
-                            <div className="chats__chatbox__navbar__user__icon">
-                                <i className='bx bxs-phone' ></i>
-                            </div>
-                            <div className="chats__chatbox__navbar__user__icon">
-                                <i className='bx bxs-video' ></i>
-                            </div>
-                            <div className="chats__chatbox__navbar__user__icon">
-                                <i className='bx bxs-info-circle' ></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ChatBoxNavbar chat={chat}/>
                 {loading 
                 ? <div style={{textAlign: 'center', width: '80%'}}> <p>Loading...</p></div>
                 : <div className="chats__chatbox__content">
