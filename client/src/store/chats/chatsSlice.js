@@ -37,7 +37,7 @@ const chatsSlice = createSlice({
             state.messages = action.payload.reverse();
         })
         .addCase(postMessage.fulfilled,(state, action)=>{
-            state.messages.push(action.payload);
+            state.messages = [action.payload ,...state.messages]
         })
         .addCase(postMessage.rejected,(state, action)=>{
             state.error = action.error;

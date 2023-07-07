@@ -11,9 +11,11 @@ const io = new Server(httpServer, {
 })
 io.on('connection', (socket) =>{
     console.log('connected to socket.io');
-    socket.on('send message', data => {
-        io.emit('received message', data)
-    })
+    io.on('connection', (socket) => {
+        socket.on('on-chat', data => {
+            io.emit('user-chat', data)
+        })
+    });
 })
 httpServer.listen(PORT,()=>{
     console.log(`Server API listening on ${PORT}`);

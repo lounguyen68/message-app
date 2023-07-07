@@ -9,6 +9,8 @@ import { getMessages, postMessage } from '../../store/chats/chatsActions'
 import { io } from 'socket.io-client'
 import ChatBoxNavbar from './ChatBoxNavbar'
 
+const socket = io("http://localhost:3003")
+
 const ChatBox = () => {
     const { userToken, userInfo } = useSelector(state => state.auth)
     const { loading, messages,chats } = useSelector(state => state.chats)
@@ -24,21 +26,16 @@ const ChatBox = () => {
     }, [chatId])
 
     useEffect(() => {
-        const socket = io("http://localhost:3003")
-        socket.on('received message', (data) => {
+        socket.on("user-chat", (data) => {
             if (data.chatId === chatId) {
                 dispatch(getMessages({chatId, token: userToken}))
             }
         })
-        return () => {
-            socket.disconnect();
-        };
     }, [])
     
     const handleSendMessage = () => {
         if (message) {
-            const socket = io("http://localhost:3003")
-            socket.emit('send message', {
+            socket.emit("on-chat", {
                 userInfo,
                 chatId,
                 message
