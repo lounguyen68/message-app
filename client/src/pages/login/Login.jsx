@@ -21,13 +21,15 @@ const Login = () => {
       }, [navigate, userInfo])
 
     const handleLogin = () => {
-        dispatch(loginUser({username, password}))
+        if (username.length > 5 && password.length > 5) {
+            dispatch(loginUser({username, password}))
             .then(result => {
                 if (result.payload) {
                     setUsername('');
                     setPassword('');
                 }
             })
+        }
     }
 
     return (

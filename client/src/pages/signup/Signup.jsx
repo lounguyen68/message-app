@@ -25,7 +25,8 @@ const Signup = () => {
     
     const urlAvatar = 'test'
     const handleSignup = () => {
-        dispatch(registerUser({email, username, urlAvatar ,password: password2}))
+        if (username.length > 5 && password.length > 5 && password === password2)
+            dispatch(registerUser({email, username, urlAvatar ,password: password2}))
     }
 
     return (
