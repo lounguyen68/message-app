@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const connectString = `mongodb://127.0.0.1:27017/${process.env.DB_NAME}`
+const connectString = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@message-app.vnr6ru0.mongodb.net/?retryWrites=true&w=majority`
 
 class Database {
 
